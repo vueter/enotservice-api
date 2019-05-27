@@ -14,7 +14,8 @@ const regionsSchema = new mongoose.Schema({
 const regionsModel = mongoose.model('Regions', regionsSchema)
 
 const infoSchema = mongoose.Schema({
-    info: Object
+    name: String,
+    value: String
 })
 
 const infoModel = mongoose.model('Info', infoSchema)
@@ -53,18 +54,54 @@ const orderGroupsSchema = mongoose.Schema({
     name: String
 })
 
+const sliderSchema = mongoose.Schema({
+    name: String,
+    path: String
+})
+
+const sliderModel = mongoose.model('Slider', sliderSchema)
+
 const orderElementsSchema = mongoose.Schema({
     order: String,
     name: String,
     icon: String,
     price: String,
-    kind: String
+    kind: String,
+    text: String,
+    discount: Number,
+    position: Number
 })
 
 const orderGroupsModel = mongoose.model('OrderGroups', orderGroupsSchema)
 const orderElementsModel = mongoose.model('OrderElements', orderElementsSchema)
 
+const requestSchema = mongoose.Schema({
+    text: String
+})
+
+const requestModel = mongoose.model('Requests', requestSchema)
+
 const plugin = (instance, _, next) => {
+
+    instance.grud(requestModel).install('/requests', instance, {
+        body: {
+            type: 'object',
+            properties: {
+                text: { type: 'string' }
+            }
+        }
+    }, '1.0.0')
+
+    instance.grud(sliderModel).install('/slider', instance, {
+        body: {
+            type: 'object',
+            properties: {
+                name: { type: 'string' },
+                path: { type: 'string' }
+            },
+            required: ['name', 'path']
+        }
+    }, '1.0.0')
 
     instance.grud(orderGroupsModel).install('/order-groups', instance, {
         body: {
