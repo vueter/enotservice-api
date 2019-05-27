@@ -1,0 +1,26 @@
+{
+  "name": "enotservice-api",
+  "version": "1.0.0",
+  "description": "The EnotService API",
+  "main": "index.js",
+  "scripts": {
+    "serve": "nodemon index.js",
+    "test": "tap test/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vueter/enotservice-api.git"
+  },
+  "author": "Firdavs Beknazarov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vueter/enotservice-api/issues"
+  },
+  "homepage": "https://github.com/vueter/enotservice-api#readme",
+  "dependencies": {
+    "fastify": "^2.4.1",
+    "fastify-autoload": "^0.8.0",
+    "fastify-plugin": "^1.5.0",
+    "mongoose": "^5.5.11"
+  }
+}
