@@ -148,7 +148,7 @@ const plugin = (instance, _, next) => {
     next()
 }
 
-mongoose.connect('mongodb://@localhost:27017/enotservice', { autoIndex: false, useNewUrlParser: true })
+mongoose.connect('mongodb://localhost:27017/enotservice', { autoIndex: false, useNewUrlParser: true })
 
 module.exports = fp(plugin, {
     decorators: {
