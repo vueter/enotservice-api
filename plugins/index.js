@@ -75,6 +75,44 @@ Plugin.prototype.delete = function(id, reply){
     })
 }
 
+Plugin.prototype.install = function(instance, schema, version){
+    if(schema === undefined){
+        schema = {}
+    }
+
+    if(version === undefined){
+        version = '1.0.0'
+    }
+
+    instance.get('/cities', { version: version }, (_, reply) => {
+        this.find(reply)
+    })
+
+    instance.route({
+        method: 'POST',
+        url: '/cities/create',
+        schema: schema,
+        version: version,
+        handler: (request, reply) => {
+            this.create(request.body, reply)
+        }
+    })
+
+    instance.route({
+        method: 'POST',
+        url: '/cities/:id/update',
+        schema: schema,
+        version: version,
+        handler: (request, reply) => {
+            this.update(request.params.id, request.body, reply)
+        }
+    })
+
+    instance.delete('/cities/:id/delete', { version: version }, (request, reply) => {
+        this.delete(request.params.id, reply)
+    })
+}
+
 module.exports = fp((instance, _, next) => {
     instance.decorate('grud', (model) => {
         return new Plugin(model)
