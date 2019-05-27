@@ -41,7 +41,13 @@ const ordersSchema = mongoose.Schema({
     segments: Array
 })
 
-const ordersModel = mongoose.model('orders', ordersSchema)
+const ordersModel = mongoose.model('Orders', ordersSchema)
+
+const orderSchema = mongoose.Schema({
+    segments: Array
+})
+
+const orderModel = mongoose.model('Order', orderSchema)
 
 const plugin = (instance, _, next) => {
 
@@ -127,6 +133,16 @@ const plugin = (instance, _, next) => {
             }
         },
         required: ['user', 'city', 'region', 'street', 'home', 'tier', 'accommodation', 'segments']
+    }, '1.0.0')
+
+    instance.grud(orderModel).install('/order', instance, {
+        type: 'object',
+        properties: {
+            segments: {
+                type: 'array'
+            }
+        },
+        required: ['segments']
     }, '1.0.0')
 
     next()
