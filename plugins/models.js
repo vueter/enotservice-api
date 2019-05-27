@@ -49,7 +49,46 @@ const orderSchema = mongoose.Schema({
 
 const orderModel = mongoose.model('Order', orderSchema)
 
+const orderGroupsSchema = mongoose.Schema({
+    name: String
+})
+
+const orderElementsSchema = mongoose.Schema({
+    order: String,
+    name: String,
+    icon: String,
+    price: String,
+    kind: String
+})
+
+const orderGroupsModel = mongoose.model('OrderGroups', orderGroupsSchema)
+const orderElementsModel = mongoose.model('OrderElements', orderElementsSchema)
+
 const plugin = (instance, _, next) => {
+
+    instance.grud(orderGroupsModel).install('/order-groups', instance, {
+        body: {
+            type: 'object',
+            properties: {
+                name: {
+                    type: 'string'
+                }
+            }
+        }
+    }, '1.0.0')
+
+    instance.grud(orderElementsModel).install('/order-elements', instance, {
+        body: {
+            type: 'object',
+            properties: {
+                order: { type: 'string' },
+                name: { type: 'string' },
+                icon: { type: 'string' },
+                price: { type: 'string' },
+                kind: { type: 'string' },
+            }
+        }
+    }, '1.0.0')
 
     instance.grud(citiesModel).install('/cities', instance, {
         body: {
@@ -81,24 +120,12 @@ const plugin = (instance, _, next) => {
         body: {
             type: 'object',
             properties: {
-                firstname: {
-                    type: 'string'
-                },
-                lastname: {
-                    type: 'string'
-                },
-                username: {
-                    type: 'string'
-                },
-                password: {
-                    type: 'string'
-                },
-                phonenumber: {
-                    type: 'string'
-                },
-                email: {
-                    type: 'string'
-                },
+                firstname: { type: 'string' },
+                lastname: { type: 'string' },
+                username: { type: 'string' },
+                password: { type: 'string' },
+                phonenumber: { type: 'string' },
+                email: { type: 'string' },
             },
             required: ['firstname', 'lastname', 'username', 'password', 'phonenumber']
         }
@@ -107,30 +134,14 @@ const plugin = (instance, _, next) => {
     instance.grud(ordersModel).install('/orders', instance, {
         type: 'object',
         properties: {
-            user: {
-                type: 'string'
-            },
-            city: {
-                type: 'string'
-            },
-            region: {
-                type: 'string'
-            },
-            street: {
-                type: 'string'
-            },
-            home: {
-                type: 'number'
-            },
-            tier: {
-                type: 'number'
-            },
-            accommodation: {
-                type: 'string'
-            },
-            segments: {
-                type: 'array'
-            }
+            user: { type: 'string' },
+            city: { type: 'string' },
+            region: { type: 'string' },
+            street: { type: 'string' },
+            home: { type: 'number' },
+            tier: { type: 'number' },
+            accommodation: { type: 'string' },
+            segments: { type: 'array' }
         },
         required: ['user', 'city', 'region', 'street', 'home', 'tier', 'accommodation', 'segments']
     }, '1.0.0')
@@ -138,9 +149,7 @@ const plugin = (instance, _, next) => {
     instance.grud(orderModel).install('/order', instance, {
         type: 'object',
         properties: {
-            segments: {
-                type: 'array'
-            }
+            segments: { type: 'array' }
         },
         required: ['segments']
     }, '1.0.0')
