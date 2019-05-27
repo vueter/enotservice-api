@@ -30,6 +30,19 @@ const userSchema = mongoose.Schema({
 
 const usersModel = mongoose.model('Users', userSchema)
 
+const ordersSchema = mongoose.Schema({
+    user: String,
+    city: String,
+    region: String,
+    street: String,
+    home: Number,
+    tier: Number,
+    accommodation: Number,
+    segments: Array
+})
+
+const ordersModel = mongoose.model('orders', ordersSchema)
+
 const plugin = (instance, _, next) => {
 
     instance.grud(citiesModel).install('/cities', instance, {
@@ -83,6 +96,37 @@ const plugin = (instance, _, next) => {
             },
             required: ['firstname', 'lastname', 'username', 'password', 'phonenumber']
         }
+    }, '1.0.0')
+
+    instance.grud(ordersModel).install('/orders', instance, {
+        type: 'object',
+        properties: {
+            user: {
+                type: 'string'
+            },
+            city: {
+                type: 'string'
+            },
+            region: {
+                type: 'string'
+            },
+            street: {
+                type: 'string'
+            },
+            home: {
+                type: 'number'
+            },
+            tier: {
+                type: 'number'
+            },
+            accommodation: {
+                type: 'string'
+            },
+            segments: {
+                type: 'array'
+            }
+        },
+        required: ['user', 'city', 'region', 'street', 'home', 'tier', 'accommodation', 'segments']
     }, '1.0.0')
 
     next()
