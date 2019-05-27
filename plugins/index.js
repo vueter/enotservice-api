@@ -75,7 +75,7 @@ Plugin.prototype.delete = function(id, reply){
     })
 }
 
-Plugin.prototype.install = function(instance, schema, version){
+Plugin.prototype.install = function(path, instance, schema, version){
     if(schema === undefined){
         schema = {}
     }
@@ -84,13 +84,13 @@ Plugin.prototype.install = function(instance, schema, version){
         version = '1.0.0'
     }
 
-    instance.get('/cities', { version: version }, (_, reply) => {
+    instance.get(path, { version: version }, (_, reply) => {
         this.find(reply)
     })
 
     instance.route({
         method: 'POST',
-        url: '/cities/create',
+        url: path + '/create',
         schema: schema,
         version: version,
         handler: (request, reply) => {
@@ -100,7 +100,7 @@ Plugin.prototype.install = function(instance, schema, version){
 
     instance.route({
         method: 'POST',
-        url: '/cities/:id/update',
+        url: path + '/:id/update',
         schema: schema,
         version: version,
         handler: (request, reply) => {
@@ -108,7 +108,7 @@ Plugin.prototype.install = function(instance, schema, version){
         }
     })
 
-    instance.delete('/cities/:id/delete', { version: version }, (request, reply) => {
+    instance.delete(path + '/:id/delete', { version: version }, (request, reply) => {
         this.delete(request.params.id, reply)
     })
 }
