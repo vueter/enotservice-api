@@ -65,7 +65,7 @@ const orderElementsSchema = mongoose.Schema({
     order: String,
     name: String,
     icon: String,
-    price: String,
+    price: Number,
     kind: String,
     text: String,
     discount: Number,
@@ -129,6 +129,8 @@ const plugin = (instance, _, next) => {
             }
         }
     }, '1.0.0')
+
+    instance.decorate('Schema', orderElementsModel)
 
     instance.grud(orderElementsModel).install('/order-elements', instance, {
         body: {

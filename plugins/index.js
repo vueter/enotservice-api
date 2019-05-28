@@ -87,6 +87,10 @@ Plugin.prototype.install = function(path, instance, schema, version){
         this.find(reply)
     })
 
+    instance.post(path, { version: version }, (request, reply) => {
+        this.find(request.body, reply)
+    })
+
     instance.route({
         method: 'POST',
         url: path + '/create',

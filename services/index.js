@@ -191,5 +191,22 @@ module.exports = (instance, _, next) => {
         })
     })
 
+    instance.get('/schema', { version: '1.0.0' }, (_, reply) => {
+        instance.Schema.find((error, items) => {
+            if(error){
+                reply.callNotFound()
+            }
+            else{
+                const manager = new instance.SchemaManager(items)
+                reply.send({
+                    statusCode: 200,
+                    error: 'Ok',
+                    message: 'Success',
+                    data: manager.convert()
+                })
+            }
+        })
+    })
+
     next()
 }

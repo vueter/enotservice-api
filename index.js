@@ -12,6 +12,11 @@ app.register(Cors, {
 
 app.register(require('fastify-file-upload'))
 
+app.register(require('fastify-static'), {
+    root: path.join(__dirname, 'uploads'),
+    prefix: '/uploads/', // optional: default '/'
+})
+
 app.register(Autoload, {
     dir: path.join(__dirname, 'plugins')
 })
