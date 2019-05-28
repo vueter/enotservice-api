@@ -1,6 +1,5 @@
 const fp = require('fastify-plugin')
 
-
 const Plugin = function(model){
     if(!(this instanceof Plugin)){
         return new Plugin(model)

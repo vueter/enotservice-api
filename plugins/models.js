@@ -81,7 +81,23 @@ const requestSchema = mongoose.Schema({
 
 const requestModel = mongoose.model('Requests', requestSchema)
 
+const smsModel = mongoose.model('SMS', new mongoose.Schema({
+    phonenumber: String,
+    smscode: Number
+}))
+
 const plugin = (instance, _, next) => {
+    instance.decorate('SMS', smsModel)
+
+    instance.grud(smsModel).install('/sms', instance, {
+        body: {
+            type: 'object',
+            properties: {
+                phonenumber: { type: 'string' },
+                smscode: { type: 'number' }
+            }
+        }
+    }, '1.0.0')
 
     instance.grud(requestModel).install('/requests', instance, {
         body: {
@@ -153,6 +169,7 @@ const plugin = (instance, _, next) => {
 
     instance.grud(infoModel).install('/info', instance, {}, '1.0.0')
 
+    instance.decorate('Users', usersModel)
     instance.grud(usersModel).install('/users', instance, {
         body: {
             type: 'object',
