@@ -73,8 +73,20 @@ const orderElementsSchema = mongoose.Schema({
     position: Number
 })
 
+const paymentElementsSchema = mongoose.Schema({
+    order: String,
+    name: String,
+    icon: String,
+    price: Number,
+    kind: String,
+    text: String,
+    discount: Number,
+    position: Number
+})
+
 const orderGroupsModel = mongoose.model('OrderGroups', orderGroupsSchema)
 const orderElementsModel = mongoose.model('OrderElements', orderElementsSchema)
+const paymentElementsModel = mongoose.model('PaymentElements', paymentElementsSchema)
 
 const requestSchema = mongoose.Schema({
     text: String
@@ -132,6 +144,7 @@ const plugin = (instance, _, next) => {
     }, '1.0.0')
 
     instance.decorate('Schema', orderElementsModel)
+    instance.decorate('PaymentSchema', paymentElementsModel)
 
     instance.grud(orderElementsModel).install('/order-elements', instance, {
         body: {
