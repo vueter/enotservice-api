@@ -9,7 +9,7 @@ const Plugin = function(model){
 
 Plugin.prototype.create = function(data, reply){
     const model = new this.model(data)
-    model.save((error) => {
+    model.save((error, item) => {
         if(error){
             reply.callNotFound()
         }
@@ -17,7 +17,8 @@ Plugin.prototype.create = function(data, reply){
             reply.send({
                 statusCode: 200,
                 error: 'Ok',
-                message: 'Success'
+                message: 'Success',
+                insertedId: item.id
             })
         }
     })
