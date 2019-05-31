@@ -225,5 +225,26 @@ module.exports = (instance, _, next) => {
         })
     })
 
+    const schema = {
+        type: 'object',
+        properties: {
+            phonenumber: {
+                type: 'string'
+            },
+            price: {
+                type: 'number'
+            }
+        },
+        required: ['phonenumber', 'price']
+    }
+    instance.post('/pay', { schema, version: '1.0.0' }, (request, reply) => {
+        reply.send({
+            statusCode: 200,
+            error: 'Ok',
+            message: 'Success',
+            data: request.body
+        })
+    })
+
     next()
 }

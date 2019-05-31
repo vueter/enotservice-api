@@ -159,6 +159,19 @@ const plugin = (instance, _, next) => {
         }
     }, '1.0.0')
 
+    instance.grud(paymentElementsModel).install('/payment-elements', instance, {
+        body: {
+            type: 'object',
+            properties: {
+                order: { type: 'string' },
+                name: { type: 'string' },
+                icon: { type: 'string' },
+                price: { type: 'string' },
+                kind: { type: 'string' },
+            }
+        }
+    }, '1.0.0')
+
     instance.grud(citiesModel).install('/cities', instance, {
         body: {
             type: 'object',
