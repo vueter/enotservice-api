@@ -39,7 +39,8 @@ const ordersSchema = mongoose.Schema({
     home: Number,
     tier: Number,
     accommodation: Number,
-    segments: Array
+    segments: Array,
+    price: Number
 })
 
 const ordersModel = mongoose.model('Orders', ordersSchema)
