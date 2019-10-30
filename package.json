@@ -24,6 +24,6 @@
     "fastify-file-upload": "^1.0.0",
     "fastify-plugin": "^1.5.0",
     "fastify-static": "^2.4.0",
-    "mongoose": "^5.5.11"
+    "mongoose": "^5.7.5"
   }
 }
